@@ -1,0 +1,28 @@
+Info: Starting: Create block symbol file (.bsf)
+Info: qsys-generate D:\test\fftipcore.qsys --block-symbol-file --output-directory=D:\test\fftipcore --family="Cyclone V" --part=5CSEMA5F31C6
+Progress: Loading test/fftipcore.qsys
+Progress: Reading input file
+Progress: Adding fft_ii_0 [altera_fft_ii 15.1]
+Progress: Parameterizing module fft_ii_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: qsys-generate succeeded.
+Info: Finished: Create block symbol file (.bsf)
+Info: 
+Info: Starting: Create HDL design files for synthesis
+Info: qsys-generate D:\test\fftipcore.qsys --synthesis=VERILOG --output-directory=D:\test\fftipcore\synthesis --family="Cyclone V" --part=5CSEMA5F31C6
+Progress: Loading test/fftipcore.qsys
+Progress: Reading input file
+Progress: Adding fft_ii_0 [altera_fft_ii 15.1]
+Progress: Parameterizing module fft_ii_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: fftipcore: Generating fftipcore "fftipcore" for QUARTUS_SYNTH
+Info: fft_ii_0: "fftipcore" instantiated altera_fft_ii "fft_ii_0"
+Info: fftipcore: Done "fftipcore" with 2 modules, 53 files
+Info: qsys-generate succeeded.
+Info: Finished: Create HDL design files for synthesis
