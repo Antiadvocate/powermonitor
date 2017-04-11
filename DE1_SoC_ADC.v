@@ -57,9 +57,50 @@ module DE1_SoC_ADC(
 	wire wait_measure_done;   //ADC value ready flag
 
 	//Reg/Wire declarations
-	wire [11:0] ADCout;  //Raw ADC value 12 bits
 	 
+   reg conv;
+    reg rdy;
+    reg [3:0] count;
+    //reg [11:0] ADCout;
+    reg [11:0] tmp;
+	wire [11:0] ADCout;  //Raw ADC value 12 bits
+    //The clock counter. Starts at 0, so clock is from 0-15 instead of 1-16.
+    always @ (posedge CLOCK_50)
+        begin
+            count <= count + 1;
+        end
+    
+    //Assert the CONV signal
+    always @ (negedge CLOCK_50)
+        begin
+            if ((count == 15))
+                conv = 1'b0;
+            else 
+                conv = 1'b1;
+        end                
+    
+    //Read the serial data into a 12-bit register. Afterwards, convert it to parallel if the count is 13 (end of data stream)
+    always @ (negedge CLOCK_50)
+        begin
+            if (count == 14)
+                tmp <= ADCout;
+            case (count)
+                1: ADCout[11] <= serial_data;
+                2: ADCout[10] <= serial_data;
+                3: ADCout[9] <= serial_data;
+                4: ADCout[8] <= serial_data;
+                5: ADCout[7] <= serial_data;
+                6: ADCout[6] <= serial_data;
+                7: ADCout[5] <= serial_data;
+                8: ADCout[4] <= serial_data;
+                9: ADCout[3] <= serial_data;
+                10: ADCout[2] <= serial_data;
+                11: ADCout[1] <= serial_data;
+                12: ADCout[0] <= serial_data;
+            endcase
 
+        end
+		  
 	/* Reserved for Part 2
 	wire [15:0] ADC_16_in;   //16 bits ADC data:input into SDRAM
 	wire [15:0] ADC_16_out;  //16 bits ADC data:output from SDRAM
@@ -105,7 +146,7 @@ module DE1_SoC_ADC(
 	
 	
 	
-	 DE1_SoC_QSYS u_top (
+	/* DE1_SoC_QSYS u_top (
         .clk_clk                        (CLOCK_50),    //Original Reference clock:50MHz    
         .reset_reset_n                  (1'b1),        //reset signal for whole system: KEY0  
 		  .sw_ADC_pin_select  				 (SW[2:0]),
@@ -132,7 +173,7 @@ module DE1_SoC_ADC(
 		  .pll_sys_outclk2_clk            (clk_25)      //25MHz clock for VGA display
 		  //------------------------------------------------------------------------------------
     );
- 
+ */
 wire sink_ready;
 wire source_valid;
 wire        source_sop;   //       .source_sop
